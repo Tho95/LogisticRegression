@@ -5,10 +5,10 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import OrdinalEncoder
 from sklearn.metrics import confusion_matrix
+from sklearn.linear_model import LogisticRegression
 
 import dataInfo
 import plot
-import model
 import preprocess
 
 filePath = 'mushrooms.csv'
@@ -35,6 +35,9 @@ X.drop('veil-type', axis = 1, inplace=True)
 
 X.drop('class', axis = 1, inplace=True) # delte target from dataset
 
+###
+X_later = X # we will use X_later after we created the first model for some more tests
+###
 X = preprocess.dummies(X)
 print('len',len(X.columns))
 
@@ -42,7 +45,7 @@ X_cardinality = preprocess.cardinality(X)
 #print(X_cardinality.columns)
 X_train, X_valid, y_train, y_valid = train_test_split(X_cardinality, y, train_size=0.8, test_size=0.2,random_state=0)
 
-model = model.logReg()
+model = LogisticRegression()
 model.fit(X_train, y_train)
 predictions = model.predict(X_valid)
 print('\n Logistic Regression Score', model.score(X_valid,y_valid))
@@ -52,4 +55,15 @@ print(confusion_matrix(y_valid, predictions))
 #we want to predict the model with less values.
 #With help of the plots we can choose some important variables to predict the target...
 
+X_later.drop(['cap-color','cap-shape', 'cap-surface', 'bruises', 'odor', 'gill-attachment',
+    'stalk-shape', 'stalk-root', 'veil-color',
+    'ring-number', 'ring-type', 'spore-print-color', 'population','habitat'],axis=1, inplace=True)
 
+X = preprocess.dummiesSome(X_later)
+#print(len(X.columns))
+X_train, X_valid, y_train, y_valid = train_test_split(X, y, train_size=0.8, test_size=0.2,random_state=0)
+model = LogisticRegression()
+model.fit(X_train, y_train)
+predictions = model.predict(X_valid)
+print('\n Logistic Regression Score with 8 variables', model.score(X_valid,y_valid))
+print(confusion_matrix(y_valid, predictions))

@@ -12,10 +12,20 @@ def cardinality(X):
     return X
 
 def dummies(X):
-        X = pd.get_dummies(X, columns=['cap-shape', 'cap-surface', 'bruises', 'odor', 'gill-attachment',
-       'gill-spacing', 'gill-size', 'stalk-shape', 'stalk-root',
-       'stalk-surface-above-ring', 'stalk-surface-below-ring',
-       'stalk-color-above-ring', 'stalk-color-below-ring', 'veil-color',
-       'ring-number', 'ring-type', 'spore-print-color', 'population',
-       'habitat'], drop_first=True)
-        return X
+    '''function to create dummies for the variables of the Dataframe X, returns the new dummy-encoded Dataframe X'''
+    X = pd.get_dummies(X, columns=['cap-shape', 'cap-surface', 'bruises', 'odor', 'gill-attachment',
+    'gill-spacing', 'gill-size', 'stalk-shape', 'stalk-root',
+    'stalk-surface-above-ring', 'stalk-surface-below-ring',
+    'stalk-color-above-ring', 'stalk-color-below-ring', 'veil-color',
+    'ring-number', 'ring-type', 'spore-print-color', 'population',
+    'habitat'], drop_first=True)
+    return X
+
+def dummiesSome(X):
+    '''function to create dummies for the variables of the Dataframe X, returns the new dummy-encoded Dataframe X'''
+    X = pd.get_dummies(X, columns=['gill-spacing', 'gill-size', 'gill-color', 'stalk-surface-above-ring',
+                                   'stalk-surface-below-ring', 'stalk-color-above-ring',
+                                   'stalk-color-below-ring'], drop_first=True)
+    return X
+
+
