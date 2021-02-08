@@ -26,6 +26,11 @@ ordinal_encoder = OrdinalEncoder(categories=[['e', 'p']])
 ordinal_encoder.fit(X[['class']])
 y = pd.DataFrame(ordinal_encoder.transform(X[['class']])) #our target variable
 
+plot.target(X)
+
+plot.count(X)
+#### with help of the plot we see some information for further preprocessing
+
 X.drop('class', axis = 1, inplace=True) # delte target from dataset
 
 X_cardinality = preprocess.cardinality(X)
